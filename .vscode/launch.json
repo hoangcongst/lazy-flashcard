@@ -1,0 +1,89 @@
+{
+    "configurations": [
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "source:getByIdFunction (nodejs12.x)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "${workspaceFolder}/source/template.yaml",
+                "logicalId": "getByIdFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {},
+                "runtime": "nodejs12.x"
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "API source:getByIdFunction (nodejs12.x)",
+            "invokeTarget": {
+                "target": "api",
+                "templatePath": "${workspaceFolder}/source/template.yaml",
+                "logicalId": "getByIdFunction"
+            },
+            "api": {
+                "path": "/{id}",
+                "httpMethod": "get",
+                "payload": {
+                    "json": {}
+                }
+            },
+            "lambda": {
+                "runtime": "nodejs12.x"
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "source:putItemFunction (nodejs12.x)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "${workspaceFolder}/source/template.yaml",
+                "logicalId": "putItemFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {},
+                "runtime": "nodejs12.x"
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "API source:putItemFunction (nodejs12.x)",
+            "invokeTarget": {
+                "target": "api",
+                "templatePath": "${workspaceFolder}/source/template.yaml",
+                "logicalId": "putItemFunction"
+            },
+            "api": {
+                "path": "/",
+                "httpMethod": "post",
+                "payload": {
+                    "json": {}
+                }
+            },
+            "lambda": {
+                "runtime": "nodejs12.x"
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "source:SampleTable",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "${workspaceFolder}/source/template.yaml",
+                "logicalId": "SampleTable"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {},
+                "runtime": "nodejs12.x"
+            }
+        }
+    ]
+}
