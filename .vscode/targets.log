@@ -6,8 +6,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
+make: *** No rule to make target `all'.  Stop.
 
-# Make data base, printed on Mon Jun 13 09:51:09 2022
+
+# Make data base, printed on Tue Jun 14 14:43:28 2022
 
 # Variables
 
@@ -46,11 +49,11 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/n4/9x7_2nd178nd92ld_bd8wylr0000gn/T/vscode-ipc-57e9d51e-4211-42a6-b44b-b500bb91d6cb.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/n4/9x7_2nd178nd92ld_bd8wylr0000gn/T/vscode-ipc-6e7814f0-8590-4397-a0f5-9727ea8a8ee8.sock
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/hoangcongst/Documents/flutter/bin
+PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/hoangcongst/Documents/applications:/Library/Apple/usr/bin:/Users/hoangcongst/Documents/flutter/bin
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -60,7 +63,7 @@ GITHUB_USERNAME = hoangcongst@gmail.com
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.yMEkUGm5aa/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.SNI1NVVNfd/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -144,7 +147,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 698
+VSCODE_PID = 1002
 # variable set hash-table stats:
 # Load=67/1024=7%, Rehash=0, Collisions=1/88=1%
 
@@ -154,7 +157,7 @@ VSCODE_PID = 698
 
 # Directories
 
-# . (device 16777234, inode 11175868): 7 files, no impossibilities.
+# . (device 16777232, inode 11175868): 7 files, no impossibilities.
 
 # 7 files, no impossibilities in 1 directories.
 
@@ -228,8 +231,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Mon Jun 13 09:51:09 2022
+# Finished Make data base on Tue Jun 14 14:43:28 2022
 
  
-make: *** No rule to make target `all'.  Stop.
-

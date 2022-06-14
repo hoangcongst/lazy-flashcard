@@ -5,6 +5,7 @@ import TelegramBot from 'node-telegram-bot-api';
 import { FlashCardRepository } from '../common/flashcard/flashcard-repository';
 import { handler as handlerTargetCommand } from './flashcards/target-command';
 import { handler as handlerTranslateCommand } from './flashcards/translate-command';
+import { handler as handlerPronounce } from './flashcards/pronounce-command';
 import { handler as handlerAddFlashCard } from './flashcards/add-command';
 
 export class FlashCardApp implements LambdaApp {
@@ -20,7 +21,8 @@ export class FlashCardApp implements LambdaApp {
         this.handler = {
             '/target': handlerTargetCommand,
             '/translate': handlerTranslateCommand,
-            '/a': handlerAddFlashCard
+            '/a': handlerAddFlashCard,
+            '/p': handlerPronounce
         }
     }
 
@@ -33,8 +35,9 @@ export class FlashCardApp implements LambdaApp {
 
             const isCallbackQuery = msg.data !== undefined
             const chatId = msg.chat ? msg.chat.id : msg.message.chat.id
-            let command = msg.data ? JSON.parse(msg.data).command : msg.text.split("@")[0]
+            let command = msg.data ? msg.data.substring(0, msg.data.indexOf(' ')) : msg.text.split("@")[0]
             if (command.charAt(0) !== '/') command = '/translate'
+            console.log(command)
             await this.handler[command](this.bot, chatId, msg, isCallbackQuery)
         } catch (error) {
             console.log(error)

@@ -5,3 +5,8 @@ export const translatorsInverse = {
 export const translators = {
     'PAPAGO': 0
 }
+
+export const voiceReader = {
+    'en': 'clara',
+    'ko': 'kyuri'
+}

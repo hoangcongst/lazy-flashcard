@@ -4,16 +4,16 @@ export const handler = async (bot: TelegramBot, channelId: string, msg: Message|
     if (!isCallback) {
         await bot.sendMessage(channelId, "Please choose target language", {
             "reply_markup": {
-                "inline_keyboard": [[{ text: "Vietnamese", callback_data: JSON.stringify({ "command": "/target", "val": "vi" }) }],
-                [{ text: "Korean", callback_data: JSON.stringify({ "command": "/target", "val": "ko" }) }],
-                [{ text: "English", callback_data: JSON.stringify({ "command": "/target", "val": "en" }) }]]
+                "inline_keyboard": [[{ text: "Vietnamese", callback_data: '/target vi' }],
+                [{ text: "Korean", callback_data: '/target ko' }],
+                [{ text: "English", callback_data: '/target en' }]]
             }
         });
         return true
     }
     else {
         const callbackQuery = msg as CallbackQuery
-        const targetLang = JSON.parse(callbackQuery.data??'').val 
+        const targetLang = callbackQuery.data?.split(' ')[1]??'en'
         const messageId = callbackQuery.message?.message_id
         const result = setTargetLang(targetLang)
         await bot.editMessageReplyMarkup({ inline_keyboard: [] }, { chat_id: channelId, message_id: messageId })
