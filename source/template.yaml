@@ -29,6 +29,9 @@ Resources:
           # Make table name accessible as environment variable from function code during execution
           SAMPLE_TABLE: !Ref SampleTable
           TELEGRAM_BOT_TOKEN: ""
+          APP_URL: ""
+          PAPAGO_CLIENT_ID: ""
+          PAPAGO_CLIENT_SECRET: ""
           NTBA_FIX_319: 1
       Events:
         Api:

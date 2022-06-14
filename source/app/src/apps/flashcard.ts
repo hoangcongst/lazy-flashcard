@@ -3,42 +3,43 @@ import { ApiGatewayResponse } from '../common/apigateway/apigateway-response';
 import { LambdaApp } from './lambda-app';
 import TelegramBot from 'node-telegram-bot-api';
 import { FlashCardRepository } from '../common/flashcard/flashcard-repository';
+import { handler as handlerTargetCommand } from './flashcards/target-command';
+import { handler as handlerTranslateCommand } from './flashcards/translate-command';
+import { handler as handlerAddFlashCard } from './flashcards/add-command';
 
 export class FlashCardApp implements LambdaApp {
     table: string;
     repository: FlashCardRepository;
     bot: TelegramBot;
+    handler: any;
 
     constructor(bot: TelegramBot, table: string, repository: FlashCardRepository) {
         this.table = table;
         this.repository = repository;
         this.bot = bot;
+        this.handler = {
+            '/target': handlerTargetCommand,
+            '/translate': handlerTranslateCommand,
+            '/a': handlerAddFlashCard
+        }
     }
 
     async run(event: ApiGatewayEvent): Promise<ApiGatewayResponse> {
-        const msg = JSON.parse(event.body).message
-        if (msg && msg.text) {
-            if (!this.handleChangeTargetLanguage(msg.text.toString()))
-                return { statusCode: 405 }
-        } else {
-            await this.bot.sendMessage("-665731905", "Please choose target language", {
-                "reply_markup": {
-                    "keyboard": [[{ text: "Vietnamese" }], [{ text: "Korean" }], [{ text: "English" }]]
-                }
-            });
-        }
-        return { statusCode: 200 }
-    }
+        try {
+            const reqBody = JSON.parse(event.body)
+            const msg = reqBody.message || reqBody.callback_query
 
-    handleChangeTargetLanguage(target: string): boolean {
-        const validLangs = {
-            'Vietnamese': 'vi',
-            'Korean': 'ko',
-            'English': 'en'
+            console.log(JSON.stringify(msg))
+
+            const isCallbackQuery = msg.data !== undefined
+            const chatId = msg.chat ? msg.chat.id : msg.message.chat.id
+            let command = msg.data ? JSON.parse(msg.data).command : msg.text.split("@")[0]
+            if (command.charAt(0) !== '/') command = '/translate'
+            await this.handler[command](this.bot, chatId, msg, isCallbackQuery)
+        } catch (error) {
+            console.log(error)
         }
-        if (target in validLangs) {
-            return true;
-        }
-        return false;
+
+        return { statusCode: 200 }
     }
 }
