@@ -4,7 +4,7 @@ import HmacMD5 from 'crypto-js/hmac-md5';
 import { v4 as uuidv4 } from 'uuid';
 import { TranslateResult } from './translate-result';
 
-export const translate = async (wordInput: string): Promise<TranslateResult> => {
+export const translate = async (wordInput: string, targetLang: string): Promise<TranslateResult> => {
     const langCode = await detectLang(wordInput)
     const uuid = uuidv4()
     const timestamp = new Date().getTime().toString()
@@ -30,7 +30,7 @@ export const translate = async (wordInput: string): Promise<TranslateResult> => 
     const translateResponse = await fetch("https://papago.naver.com/apis/n2mt/translate", {
         method: "POST",
         headers: header,
-        body: `deviceId=${uuid}&locale=en&dict=true&dictDisplay=30&honorific=false&instant=false&paging=false&source=${langCode}&target=en&text=${encodeURIComponent(wordInput)}`
+        body: `deviceId=${uuid}&locale=en&dict=true&dictDisplay=30&honorific=false&instant=false&paging=false&source=${langCode}&target=${targetLang}&text=${encodeURIComponent(wordInput)}`
     })
 
     const rawResult = await translateResponse.json();

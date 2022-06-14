@@ -23,11 +23,14 @@ Resources:
       Policies:
         # Give Create/Read/Update/Delete Permissions to the SampleTable
         - DynamoDBCrudPolicy:
-            TableName: !Ref SampleTable
+            TableName: !Ref TranslateResult
+        - DynamoDBCrudPolicy:
+            TableName: !Ref Users
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
-          SAMPLE_TABLE: !Ref SampleTable
+          TB_TRANSLATE_RESULT: !Ref TranslateResult
+          TB_USERS: !Ref Users
           TELEGRAM_BOT_TOKEN: ""
           APP_URL: ""
           PAPAGO_CLIENT_ID: ""
@@ -39,16 +42,24 @@ Resources:
           Properties:
             Path: /
             Method: POST
-  SampleTable:
+  TranslateResult:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:
-        Name: id
+        Name: pk
         Type: String
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
-
+  Users:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: pk
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
 Outputs:
   WebEndpoint:
     Description: "API Gateway endpoint URL for Prod stage"

@@ -7,6 +7,7 @@ import { handler as handlerTargetCommand } from './flashcards/target-command';
 import { handler as handlerTranslateCommand } from './flashcards/translate-command';
 import { handler as handlerPronounce } from './flashcards/pronounce-command';
 import { handler as handlerAddFlashCard } from './flashcards/add-command';
+import { handler as handlerStart } from './flashcards/start-command';
 
 export class FlashCardApp implements LambdaApp {
     table: string;
@@ -22,7 +23,8 @@ export class FlashCardApp implements LambdaApp {
             '/target': handlerTargetCommand,
             '/translate': handlerTranslateCommand,
             '/a': handlerAddFlashCard,
-            '/p': handlerPronounce
+            '/p': handlerPronounce,
+            '/start': handlerStart
         }
     }
 

@@ -1,8 +1,7 @@
 import { DynamoDB } from 'aws-sdk';
-import { TranslateResultItem } from './translate-result-item';
-import { TranslateResultRepository } from './translate-result-repository';
+import { User } from './user-item';
 
-export class TranslateResultDynamoClientRepository implements TranslateResultRepository {
+export class UserDynamoClientRepository {
 
     docClient: DynamoDB.DocumentClient;
     table: string;
@@ -11,11 +10,11 @@ export class TranslateResultDynamoClientRepository implements TranslateResultRep
         this.docClient = process.env.AWS_SAM_LOCAL ? new DynamoDB.DocumentClient({
             endpoint: "http://host.docker.internal:12345"
         }) : new DynamoDB.DocumentClient();
-        this.table = process.env.TB_USERS??''
+        this.table = process.env.TB_TRANSLATE_RESULT??''
     }
 
-    async put(result: TranslateResultItem): Promise<void> {
-
+    async put(result: User): Promise<void> {
+        
         const params: DynamoDB.DocumentClient.PutItemInput = {
             TableName: this.table,
             Item: result
@@ -26,17 +25,14 @@ export class TranslateResultDynamoClientRepository implements TranslateResultRep
         return;
     }
 
-    async getById(id: string): Promise<TranslateResultItem> {
+    async getById(pk: string, fk: string): Promise<User> {
 
         const params: DynamoDB.DocumentClient.GetItemInput = {
             TableName: this.table,
             Key: {
-                "pk": id
-            }
+                "pk": pk.toString()            }
         };
-
-        console.log(`Fetching record ${id} from the ${this.table} Table.`);
         const result: DynamoDB.DocumentClient.GetItemOutput = await this.docClient.get(params).promise();
-        return result.Item as TranslateResultItem;
+        return result.Item as User;
     }
 }
