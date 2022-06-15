@@ -8,6 +8,7 @@ import { handler as handlerTranslateCommand } from './flashcards/translate-comma
 import { handler as handlerPronounce } from './flashcards/pronounce-command';
 import { handler as handlerAddFlashCard } from './flashcards/add-command';
 import { handler as handlerStart } from './flashcards/start-command';
+import { handler as handlerInverse } from './flashcards/inverse-command';
 
 export class FlashCardApp implements LambdaApp {
     table: string;
@@ -24,22 +25,28 @@ export class FlashCardApp implements LambdaApp {
             '/translate': handlerTranslateCommand,
             '/a': handlerAddFlashCard,
             '/p': handlerPronounce,
-            '/start': handlerStart
+            '/start': handlerStart,
+            '/inverse': handlerInverse
         }
     }
 
     async run(event: ApiGatewayEvent): Promise<ApiGatewayResponse> {
         try {
+            console.log(event.body)
             const reqBody = JSON.parse(event.body)
             const msg = reqBody.message || reqBody.callback_query
-
-            console.log(event.body)
+            
+            if(!msg) throw event.body
 
             const isCallbackQuery = msg.data !== undefined
             const chatId = msg.chat ? msg.chat.id : msg.message.chat.id
             const userId = msg.from.id
-            let command = msg.data ? msg.data.substring(0, msg.data.indexOf(' ')) : msg.text.split("@")[0]
-            if (command.charAt(0) !== '/') command = '/translate'
+
+            let command = msg.data ? msg.data.substring(0, msg.data.indexOf(' ')) : msg.text?.split("@")[0]
+            if(msg.group_chat_created) command = '/start'
+            else if (command.charAt(0) !== '/') command = '/translate'
+
+            console.log(command)
             await this.handler[command](this.bot, userId, chatId, msg, isCallbackQuery)
         } catch (error) {
             console.log(error)

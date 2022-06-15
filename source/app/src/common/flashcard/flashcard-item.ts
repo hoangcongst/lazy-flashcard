@@ -3,5 +3,6 @@ export interface FlashCardItem {
     sk: string; //md5 of word
     input: string;
     output: string;
-    fluency: number
+    engine: number;
+    fluency: number;
 }

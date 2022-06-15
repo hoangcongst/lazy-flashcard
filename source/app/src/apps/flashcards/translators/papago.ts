@@ -45,12 +45,10 @@ export const formatResult = (wordInput: string, result: any): string => {
     dicts.push(`<b><u>In:</u></b> ${wordInput}`)
     dicts.push(`<b><u>Out:</u>${result.translatedText}</b>\n`)
     dicts.push(...formatMeaningPart(result.dict))
-    dicts.push('\n<b>--------------------------------------------------------</b>')
-    dicts.push(...formatMeaningPart(result.tarDict))
     return dicts.join('\n')
 }
 
-const formatMeaningPart = (input: any): Array<string> => {
+export const formatMeaningPart = (input: any): Array<string> => {
     const dicts: Array<string> = []
     input?.items.forEach((item: any) => {
         let title = `\n${'\u{270D}'} <a href="${item.url}">${item.entry}</a>`

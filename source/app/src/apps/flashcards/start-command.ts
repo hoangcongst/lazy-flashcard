@@ -4,13 +4,12 @@ import { USER_KEY } from "../constant/user-key";
 
 export const handler = async (bot: TelegramBot, userId: string, chatId: string, msg: Message | CallbackQuery, isCallback = false): Promise<boolean> => {
     const userRepository = new UserDynamoClientRepository()
-    if (userId !== chatId)
-        userRepository.put({
-            pk: userId.toString(),
-            sk: USER_KEY.INFO,
-            name: msg.from?.first_name + ' ' + msg.from?.last_name,
-            username: msg.from?.username
-        })
+    userRepository.put({
+        pk: userId.toString(),
+        sk: USER_KEY.INFO,
+        name: msg.from?.first_name + ' ' + msg.from?.last_name,
+        username: msg.from?.username
+    })
 
     await bot.sendMessage(chatId, "Thank you for your supporting my pet project, please touch to /target to set target language!");
     return true;
