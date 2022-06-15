@@ -10,7 +10,7 @@ export class UserDynamoClientRepository {
         this.docClient = process.env.AWS_SAM_LOCAL ? new DynamoDB.DocumentClient({
             endpoint: "http://host.docker.internal:12345"
         }) : new DynamoDB.DocumentClient();
-        this.table = process.env.TB_TRANSLATE_RESULT??''
+        this.table = process.env.TB_USER??'users'
     }
 
     async put(result: User): Promise<void> {
@@ -25,12 +25,13 @@ export class UserDynamoClientRepository {
         return;
     }
 
-    async getById(pk: string, fk: string): Promise<User> {
-
+    async getById(pk: string, sk: string): Promise<User> {
         const params: DynamoDB.DocumentClient.GetItemInput = {
             TableName: this.table,
             Key: {
-                "pk": pk.toString()            }
+                pk: pk.toString(),
+                sk: sk
+            }
         };
         const result: DynamoDB.DocumentClient.GetItemOutput = await this.docClient.get(params).promise();
         return result.Item as User;

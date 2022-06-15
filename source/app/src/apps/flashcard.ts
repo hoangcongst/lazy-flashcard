@@ -33,14 +33,14 @@ export class FlashCardApp implements LambdaApp {
             const reqBody = JSON.parse(event.body)
             const msg = reqBody.message || reqBody.callback_query
 
-            console.log(JSON.stringify(msg))
+            console.log(event.body)
 
             const isCallbackQuery = msg.data !== undefined
             const chatId = msg.chat ? msg.chat.id : msg.message.chat.id
+            const userId = msg.from.id
             let command = msg.data ? msg.data.substring(0, msg.data.indexOf(' ')) : msg.text.split("@")[0]
             if (command.charAt(0) !== '/') command = '/translate'
-            console.log(command)
-            await this.handler[command](this.bot, chatId, msg, isCallbackQuery)
+            await this.handler[command](this.bot, userId, chatId, msg, isCallbackQuery)
         } catch (error) {
             console.log(error)
         }

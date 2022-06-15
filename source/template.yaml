@@ -31,6 +31,7 @@ Resources:
           # Make table name accessible as environment variable from function code during execution
           TB_TRANSLATE_RESULT: !Ref TranslateResult
           TB_USERS: !Ref Users
+          TB_FLASHCARD: !Ref FlashCard
           TELEGRAM_BOT_TOKEN: ""
           APP_URL: ""
           PAPAGO_CLIENT_ID: ""
@@ -52,11 +53,34 @@ Resources:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
   Users:
-    Type: AWS::Serverless::SimpleTable
+    Type: AWS::DynamoDB::Table
     Properties:
-      PrimaryKey:
-        Name: pk
-        Type: String
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+  FlashCard:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2

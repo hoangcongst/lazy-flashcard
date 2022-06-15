@@ -1,14 +1,9 @@
-import TelegramBot, { Message } from "node-telegram-bot-api"
-import { v4 as uuidv4 } from 'uuid';
+import TelegramBot, { CallbackQuery, Message } from "node-telegram-bot-api"
 
-export const handler = async (bot: TelegramBot, channelId: string, msg: Message): Promise<boolean> => {
-    if (msg.text) {
-        const wordInput = msg.text.charAt(0) === '/' ? msg.text.substring(0, msg.text.indexOf(' ')) : msg.text
-        await bot.sendMessage(channelId, `/add_${uuidv4}\nPlease add input:`, {
-            "reply_markup": {
-                "force_reply": true
-            }
-        });
+export const handler = async (bot: TelegramBot, userId: string, chatId: string, msg: CallbackQuery): Promise<boolean> => {
+    if (msg.data) {
+        const wordInput = msg.data.charAt(0) === '/' ? msg.data.substring(0, msg.data.indexOf(' ')) : msg.data
+        await bot.sendMessage(chatId, `Added into flashcards`);
     }
 
     return true

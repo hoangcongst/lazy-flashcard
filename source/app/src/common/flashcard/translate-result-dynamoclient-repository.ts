@@ -11,11 +11,10 @@ export class TranslateResultDynamoClientRepository implements TranslateResultRep
         this.docClient = process.env.AWS_SAM_LOCAL ? new DynamoDB.DocumentClient({
             endpoint: "http://host.docker.internal:12345"
         }) : new DynamoDB.DocumentClient();
-        this.table = process.env.TB_USERS??''
+        this.table = process.env.TB_TRANSLATE_RESULT??''
     }
 
     async put(result: TranslateResultItem): Promise<void> {
-
         const params: DynamoDB.DocumentClient.PutItemInput = {
             TableName: this.table,
             Item: result

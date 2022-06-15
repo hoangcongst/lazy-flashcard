@@ -2,7 +2,7 @@ import TelegramBot, { CallbackQuery } from "node-telegram-bot-api"
 import { TranslateResultDynamoClientRepository } from "../../common/flashcard/translate-result-dynamoclient-repository";
 import { getAudioLink } from "./pronounce/papago";
 
-export const handler = async (bot: TelegramBot, channelId: string, msg: CallbackQuery): Promise<boolean> => {
+export const handler = async (bot: TelegramBot, userId: string, chatId: string, msg: CallbackQuery): Promise<boolean> => {
     if (msg.data) {
         const wordInputs = msg.data.split(' ')
         const type = wordInputs[1]
@@ -13,7 +13,7 @@ export const handler = async (bot: TelegramBot, channelId: string, msg: Callback
         const audioLink = await getAudioLink(input, type === 'in' ? result.srcLangType : result.tarLangType)
 
         if (audioLink)
-            await bot.sendAudio(channelId, audioLink, {
+            await bot.sendAudio(chatId, audioLink, {
                 "caption": input
             });
     }

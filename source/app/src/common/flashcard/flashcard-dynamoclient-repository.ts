@@ -6,37 +6,39 @@ import { FlashCardItem } from './flashcard-item';
 export class FlashCardDynamoClientRepository implements FlashCardRepository {
 
     docClient: DynamoDB.DocumentClient;
+    table: string
 
     constructor() {
         this.docClient = process.env.AWS_SAM_LOCAL ? new DynamoDB.DocumentClient({
             endpoint: "http://host.docker.internal:12345"
         }) : new DynamoDB.DocumentClient();
+        this.table = process.env.TB_FLASHCARD??''
     }
 
     // Stores the given TodoItem in the DynamoDB Table specified.
-    async putTodo(todoItem: FlashCardItem, table: string): Promise<void> {
+    async putTodo(todoItem: FlashCardItem): Promise<void> {
 
         const params: DynamoDB.DocumentClient.PutItemInput = {
-            TableName: table,
+            TableName: this.table,
             Item: todoItem
         };
 
-        console.log(`Storing record ${todoItem.id} in the ${table} Table.`);
+        console.log(`Storing record ${todoItem.pk} in the ${this.table} Table.`);
         await this.docClient.put(params).promise();
         return;
     }
 
     // Fetches a TodoItem with an Id matching the requested id from DynamoDB.
-    async getTodoById(id: string, table: string): Promise<FlashCardItem> {
+    async getTodoById(pk: string): Promise<FlashCardItem> {
 
         const params: DynamoDB.DocumentClient.GetItemInput = {
-            TableName: table,
+            TableName: this.table,
             Key: {
-                "id": id
+                "pk": pk
             }
         };
 
-        console.log(`Fetching record ${id} from the ${table} Table.`);
+        console.log(`Fetching record ${pk} from the ${this.table} Table.`);
         const result: DynamoDB.DocumentClient.GetItemOutput = await this.docClient.get(params).promise();
         return result.Item as FlashCardItem;
     }

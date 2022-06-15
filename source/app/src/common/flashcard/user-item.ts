@@ -1,5 +1,10 @@
 export interface User {
     pk: string; //telegram userId
-    fk: string;
+    sk: string;
+
+    //userInfo
+    name?: string;
+    username?: string;
+    
     target?: string;
 }
