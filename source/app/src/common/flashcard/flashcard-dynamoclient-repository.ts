@@ -25,7 +25,6 @@ export class FlashCardDynamoClientRepository implements FlashCardRepository {
 
         console.log(`Storing record ${todoItem.pk} in the ${this.table} Table.`);
         await this.docClient.put(params).promise();
-        return;
     }
 
     // Fetches a TodoItem with an Id matching the requested id from DynamoDB.

@@ -5,7 +5,8 @@ import { formatMeaningPart } from "./translators/papago";
 export const handler = async (bot: TelegramBot, userId: string, chatId: string, msg: CallbackQuery): Promise<boolean> => {
     if (msg.data) {
         const translateResultRepository = new TranslateResultDynamoClientRepository()
-        const result = await translateResultRepository.getById(msg.data.split(' ')[1])
+        const pk = msg.data.split(' ')[1]
+        const result = await translateResultRepository.getById(pk)
 
         const dicts: Array<string> = []
         dicts.push(`\n<b><u>In:</u>${result.translatedText}</b>`)

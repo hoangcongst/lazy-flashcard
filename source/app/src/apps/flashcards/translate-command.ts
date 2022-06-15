@@ -4,7 +4,7 @@ import { translate } from "./translators/papago"
 import { TranslateResultDynamoClientRepository } from "../../common/flashcard/translate-result-dynamoclient-repository";
 import { MD5 } from "crypto-js";
 import { UserDynamoClientRepository } from "../../common/flashcard/user-dynamoclient-repository";
-import { USER_KEY } from "../constant/user-key";
+import { USER_KEY } from "../constant/index-key";
 
 export const handler = async (bot: TelegramBot, userId: string, chatId: string, msg: Message): Promise<boolean> => {
     if (msg.text) {
@@ -14,7 +14,7 @@ export const handler = async (bot: TelegramBot, userId: string, chatId: string, 
         const wordInput = msg.text.charAt(0) === '/' ? msg.text.substring(0, msg.text.indexOf(' ')) : msg.text
         const translateResult = await translate(wordInput, targetLang)
 
-        const key = MD5(`${wordInput}_${translators['PAPAGO']}_${targetLang}`).toString()
+        const key = generateKeyForWord(wordInput, translators.PAPAGO, targetLang)
 
         translateResult.raw['pk'] = key
         translateResult.raw['wordInput'] = wordInput
@@ -49,6 +49,6 @@ const getListKeyboards = (key: string, inputLang: string, targetLang: string) =>
     return listInputKeyboards
 }
 
-
-
-
+export const generateKeyForWord = (wordInput: string, engine: number, targetLang: string) => {
+    return MD5(`${wordInput}_${engine}_${targetLang}`).toString()
+}

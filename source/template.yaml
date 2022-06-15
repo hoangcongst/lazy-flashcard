@@ -30,7 +30,7 @@ Resources:
         Variables:
           # Make table name accessible as environment variable from function code during execution
           TB_TRANSLATE_RESULT: !Ref TranslateResult
-          TB_USERS: !Ref Users
+          TB_USER: !Ref Users
           TB_FLASHCARD: !Ref FlashCard
           TELEGRAM_BOT_TOKEN: ""
           APP_URL: ""

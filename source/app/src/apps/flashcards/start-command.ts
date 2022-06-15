@@ -1,6 +1,6 @@
 import TelegramBot, { CallbackQuery, Message } from "node-telegram-bot-api";
 import { UserDynamoClientRepository } from "../../common/flashcard/user-dynamoclient-repository";
-import { USER_KEY } from "../constant/user-key";
+import { USER_KEY } from "../constant/index-key";
 
 export const handler = async (bot: TelegramBot, userId: string, chatId: string, msg: Message | CallbackQuery, isCallback = false): Promise<boolean> => {
     const userRepository = new UserDynamoClientRepository()
