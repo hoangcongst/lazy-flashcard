@@ -9,6 +9,7 @@ import { handler as handlerPronounce } from './flashcards/pronounce-command';
 import { handler as handlerAddFlashCard } from './flashcards/add-command';
 import { handler as handlerStart } from './flashcards/start-command';
 import { handler as handlerInverse } from './flashcards/inverse-command';
+import { handler as handlerNotify } from './flashcards/notify-command';
 
 export class FlashCardApp implements LambdaApp {
     table: string;
@@ -26,7 +27,8 @@ export class FlashCardApp implements LambdaApp {
             '/a': handlerAddFlashCard,
             '/p': handlerPronounce,
             '/start': handlerStart,
-            '/inverse': handlerInverse
+            '/inverse': handlerInverse,
+            '/notify': handlerNotify
         }
     }
 

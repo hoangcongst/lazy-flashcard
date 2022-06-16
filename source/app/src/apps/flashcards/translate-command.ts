@@ -22,7 +22,7 @@ export const handler = async (bot: TelegramBot, userId: string, chatId: string, 
 
         await bot.sendMessage(chatId, translateResult.formattedText, {
             "reply_markup": {
-                "inline_keyboard": [getListKeyboards(key, translateResult.raw.srcLangType, targetLang)]
+                "inline_keyboard": getListKeyboards(key, translateResult.raw.srcLangType, targetLang)
             },
             "disable_web_page_preview": true,
             "parse_mode": "HTML"
@@ -34,18 +34,22 @@ export const handler = async (bot: TelegramBot, userId: string, chatId: string, 
 
 const getListKeyboards = (key: string, inputLang: string, targetLang: string) => {
     const listInputKeyboards = [
-        {
-            text: `${'\u{1F503}'}`, callback_data: `/inverse ${key}`
-        },
-        {
-            text: `${'\u{2764}'} Meaning`, callback_data: `/a meaning ${key}`
-        },
-        {
-            text: `${'\u{2764}'} All`, callback_data: `/a all ${key}`
-        }
+        [
+            {
+                text: `${'\u{1F503}'}`, callback_data: `/inverse ${key}`
+            },
+        ],
+        [
+            {
+                text: `${'\u{2764}'} Meaning`, callback_data: `/a meaning ${key}`
+            },
+            {
+                text: `${'\u{2764}'} All`, callback_data: `/a all ${key}`
+            }
+        ]
     ]
-    if (voiceReader[inputLang as keyof typeof voiceReader]) listInputKeyboards.push({ text: `${'\u{1F50A}'} In`, callback_data: `/p in ${key}` })
-    if (voiceReader[targetLang as keyof typeof voiceReader]) listInputKeyboards.push({ text: `${'\u{1F50A}'} Out`, callback_data: `/p out ${key}` })
+    if (voiceReader[inputLang as keyof typeof voiceReader]) listInputKeyboards[0].push({ text: `${'\u{1F50A}'} In`, callback_data: `/p in ${key}` })
+    if (voiceReader[targetLang as keyof typeof voiceReader]) listInputKeyboards[0].push({ text: `${'\u{1F50A}'} Out`, callback_data: `/p out ${key}` })
     return listInputKeyboards
 }
 

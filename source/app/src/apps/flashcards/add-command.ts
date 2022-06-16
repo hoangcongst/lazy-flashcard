@@ -17,19 +17,16 @@ export const handler = async (bot: TelegramBot, userId: string, chatId: string, 
         const pkTranslateResult = wordInputs[2]
         const result = await translateResultRepository.getById(pkTranslateResult)
         
-        const skFlashCard = FLASHCARD_KEY.CARD_ITEM + generateKeyForWord(result.wordInput, type === 'all' ? translators.PAPAGO : translators.MANUAL, result.tarLangType)
-        await flashcardRepository.putTodo({
+        const skFlashCard = FLASHCARD_KEY.CARD_ITEM + flashCardFluency.REPEAT_NOW + '#' + generateKeyForWord(result.wordInput, type === 'all' ? translators.PAPAGO : translators.MANUAL, result.tarLangType)
+        
+        await flashcardRepository.put({
             pk: FLASHCARD_KEY.CHAT + chatId,
             sk: skFlashCard, //md5 of word
             input: result.wordInput,
-            output: type === 'all' ? result.tarDict : result.translatedText,
+            output: type === 'all' ? result.tarDict : null,
             engine: type === 'all' ? translators.PAPAGO : translators.MANUAL,
-            fluency: flashCardFluency.REPEAT_NOW
-        })
-
-        await flashcardRepository.putTodo({
-            pk: FLASHCARD_KEY.CHAT + chatId,
-            sk: FLASHCARD_KEY.FLUENCY
+            fluency: flashCardFluency.REPEAT_NOW,
+            translatedText: result.translatedText
         })
 
         await bot.sendMessage(chatId, `Added ${result.wordInput} into flashcards`);

@@ -1,6 +1,6 @@
 import { FlashCardItem } from "./flashcard-item";
 
 export interface FlashCardRepository {
-    putTodo(todoItem: FlashCardItem): Promise<void>;
-    getTodoById(id: string): Promise<FlashCardItem>;
+    put(todoItem: FlashCardItem): Promise<void>;
+    getById(id: string): Promise<FlashCardItem>;
 }
