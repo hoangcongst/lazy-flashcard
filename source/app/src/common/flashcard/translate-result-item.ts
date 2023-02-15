@@ -6,4 +6,5 @@ export interface TranslateResultItem {
     tarLangType: string;
     translatedText: string;
     wordInput: string;
+    created_at: number;
 }

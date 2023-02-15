@@ -6,11 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
-make: *** No rule to make target `all'.  Stop.
 
-
-# Make data base, printed on Wed Jun 15 09:35:58 2022
+# Make data base, printed on Wed Jul  6 17:39:47 2022
 
 # Variables
 
@@ -29,7 +26,6 @@ VSCODE_LOG_NATIVE = false
 # makefile
 CURDIR := /Users/hoangcongst/Docker/personal/lazy-flashcard
 # makefile
- 
 SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
@@ -50,7 +46,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/n4/9x7_2nd178nd92ld_bd8wylr0000gn/T/vscode-ipc-3bce0139-c5ed-47ec-99ec-17fb94e6732b.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/n4/9x7_2nd178nd92ld_bd8wylr0000gn/T/vscode-ipc-1928dfeb-9ec7-4cd4-bfcc-d19d5d58764c.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -64,7 +60,7 @@ GITHUB_USERNAME = hoangcongst@gmail.com
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.3bqN6MSl6M/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.1H6Z1jZBDX/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -80,7 +76,7 @@ HOME = /Users/hoangcongst
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/hoangcongst/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /Users/hoangcongst/Library/Application Support/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
 # environment
 LOGNAME = hoangcongst
 # environment
@@ -114,7 +110,7 @@ TMPDIR = /var/folders/n4/9x7_2nd178nd92ld_bd8wylr0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/hoangcongst/Library/Application Support/Code/1.67.2-main.sock
+VSCODE_IPC_HOOK = /Users/hoangcongst/Library/Application Support/Code/1.68.1-main.sock
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -122,7 +118,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.9017203.9017211
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.14899588.14899594
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -148,7 +144,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 72647
+VSCODE_PID = 3419
 # variable set hash-table stats:
 # Load=67/1024=7%, Rehash=0, Collisions=1/88=1%
 
@@ -158,7 +154,7 @@ VSCODE_PID = 72647
 
 # Directories
 
-# . (device 16777232, inode 11175868): 7 files, no impossibilities.
+# . (device 16777234, inode 11175868): 7 files, no impossibilities.
 
 # 7 files, no impossibilities in 1 directories.
 
@@ -232,6 +228,8 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Wed Jun 15 09:35:58 2022
+# Finished Make data base on Wed Jul  6 17:39:47 2022
 
  
+make: *** No rule to make target `all'.  Stop.
+

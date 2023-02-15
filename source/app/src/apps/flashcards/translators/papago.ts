@@ -34,6 +34,7 @@ export const translate = async (wordInput: string, targetLang: string): Promise<
     })
 
     const rawResult = await translateResponse.json();
+    console.log(rawResult)
     return {
         raw: rawResult,
         formattedText: formatResult(wordInput, rawResult)
@@ -86,5 +87,5 @@ const detectLang = async (wordInput: string): Promise<string> => {
 }
 
 const getAuthorization = (uuid: string, timestamp: string) => {
-    return "PPG " + uuid + ":" + Base64.stringify(HmacMD5(uuid + "\n" + "https://papago.naver.com/apis/n2mt/translate" + "\n" + timestamp, "v1.6.8_ce8d6d6570"))
+    return "PPG " + uuid + ":" + Base64.stringify(HmacMD5(uuid + "\n" + "https://papago.naver.com/apis/n2mt/translate" + "\n" + timestamp, process.env['PAPAGO_SITE_CLIENT_SECRET']??''))
 }
