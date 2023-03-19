@@ -26,7 +26,8 @@ export const handler = async (bot: TelegramBot, userId: string, chatId: string, 
             output: type === 'all' ? result.tarDict : null,
             engine: type === 'all' ? translators.PAPAGO : translators.MANUAL,
             fluency: flashCardFluency.REPEAT_NOW,
-            translatedText: result.translatedText
+            translatedText: result.translatedText,
+            created_at: new Date().toISOString()
         })
 
         await bot.sendMessage(chatId, `Added ${result.wordInput} into flashcards`);

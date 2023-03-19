@@ -41,5 +41,5 @@ export const getAudioLink = async (wordInput: string, lang: string): Promise<str
 }
 
 const getAuthorization = (uuid: string, timestamp: string) => {
-    return "PPG " + uuid + ":" + Base64.stringify(HmacMD5(uuid + "\n" + "https://papago.naver.com/apis/tts/makeID" + "\n" + timestamp, "v1.6.8_ce8d6d6570"))
+    return "PPG " + uuid + ":" + Base64.stringify(HmacMD5(uuid + "\n" + "https://papago.naver.com/apis/tts/makeID" + "\n" + timestamp, process.env['PAPAGO_SITE_CLIENT_SECRET']??''))
 }

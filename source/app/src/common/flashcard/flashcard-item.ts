@@ -6,4 +6,5 @@ export interface FlashCardItem {
     engine: number;
     fluency: number;
     translatedText?: string;
+    created_at: string;
 }
