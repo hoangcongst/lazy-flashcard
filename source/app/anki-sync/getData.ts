@@ -9,7 +9,7 @@ AWS.config.update({ region: 'ap-southeast-1' });
 
 export const getData = async (target: string) => {
     const repository = new FlashCardDynamoClientRepository();
-    const flashCardsFromDB = await repository.query("pk = :pk", "created_at >= :time", { // OR attribute_not_exists(created_at)", {
+    const flashCardsFromDB = await repository.query("pk = :pk", "created_at > :time", { // OR attribute_not_exists(created_at)", {
         ":pk": FLASHCARD_KEY.CHAT + target.toString(),
         ":time": process.env.LAST_IMPORT
     })
