@@ -3,6 +3,7 @@ import { FlashCardRepository } from './flashcard-repository';
 
 import { FlashCardItem } from './flashcard-item';
 import { ItemList, KeyExpression } from 'aws-sdk/clients/dynamodb';
+import { ConditionExpression } from 'aws-sdk/clients/databrew';
 
 export class FlashCardDynamoClientRepository implements FlashCardRepository {
 
@@ -40,7 +41,7 @@ export class FlashCardDynamoClientRepository implements FlashCardRepository {
         return result.Item as FlashCardItem;
     }
 
-    async query(keyConditionExpression: KeyExpression, expressionAttributeValues: any, limit?: number): Promise<ItemList | undefined> {
+    async query(keyConditionExpression: KeyExpression, filterExpression: string, expressionAttributeValues: any, limit?: number): Promise<ItemList | undefined> {
         const params: DynamoDB.DocumentClient.QueryInput = {
             TableName: this.table,
             KeyConditionExpression: keyConditionExpression,
@@ -48,6 +49,8 @@ export class FlashCardDynamoClientRepository implements FlashCardRepository {
             ExpressionAttributeValues: expressionAttributeValues,
         };
 
+        if(filterExpression.length > 0)
+            params['FilterExpression'] = filterExpression
         if (limit) params.Limit = limit
         const result: DynamoDB.DocumentClient.QueryOutput = await this.docClient.query(params).promise();
         return result.Items;

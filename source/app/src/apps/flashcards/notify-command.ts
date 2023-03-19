@@ -10,7 +10,7 @@ import { formatMeaningPart } from "./translators/papago"
 export const handler = async (bot: TelegramBot, userId: string, chatId: string, msg: Message): Promise<boolean> => {
     const flashcardRepository = new FlashCardDynamoClientRepository()
 
-    const flashCards = await flashcardRepository.query("pk = :pk AND sk > :sk", {
+    const flashCards = await flashcardRepository.query("pk = :pk AND sk > :sk", "", {
         ":pk": FLASHCARD_KEY.CHAT + chatId,
         ":sk": FLASHCARD_KEY.CARD_ITEM + flashCardFluency.FLUENCY
     })

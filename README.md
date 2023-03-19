@@ -10,3 +10,8 @@
 sudo npm install -g dynamodb-admin
 DYNAMO_ENDPOINT=http://localhost:12345 dynamodb-admin
 ```
+
+### Export Anki flashCards
+1. Change `.env` LAST_TIME configuration to the newest flashcard's time
+2. Run `cd source/app && npm run export-anki`
+3. In Anki when import files. Setting `Field separator` to `Comma`, `Note type` to `Basic` and change to the right deck
