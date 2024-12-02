@@ -12,7 +12,7 @@ export const translate = async (wordInput: string, targetLang: string): Promise<
         'authority': 'papago.naver.com',
         'accept': 'application/json',
         'accept-language': 'en',
-        'authorization': `${getAuthorization(uuid, timestamp)}`,
+        'Authorization': `${getAuthorization(uuid, timestamp)}`,
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'device-type': 'pc',
         'origin': 'https://papago.naver.com',
@@ -34,7 +34,6 @@ export const translate = async (wordInput: string, targetLang: string): Promise<
     })
 
     const rawResult = await translateResponse.json();
-    console.log(rawResult)
     return {
         raw: rawResult,
         formattedText: formatResult(wordInput, rawResult)
@@ -87,5 +86,5 @@ const detectLang = async (wordInput: string): Promise<string> => {
 }
 
 const getAuthorization = (uuid: string, timestamp: string) => {
-    return "PPG " + uuid + ":" + Base64.stringify(HmacMD5(uuid + "\n" + "https://papago.naver.com/apis/n2mt/translate" + "\n" + timestamp, process.env['PAPAGO_SITE_CLIENT_SECRET']??''))
+    return "PPG " + uuid + ":" + Base64.stringify(HmacMD5(uuid + "\n" + "https://papago.naver.com/apis/n2mt/translate" + "\n" + timestamp, process.env['PAPAGO_SITE_CLIENT_SECRET'] ?? ''))
 }

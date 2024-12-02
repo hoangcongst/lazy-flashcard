@@ -13,8 +13,8 @@ Resources:
       BuildMethod: makefile
     Properties:
       CodeUri: app/
-      Handler: dist/handlers/flashcard.handler
-      Runtime: nodejs12.x
+      Handler: dist/src/handlers/flashcard.handler
+      Runtime: nodejs18.x
       Architectures:
         - x86_64
       MemorySize: 128
@@ -38,6 +38,7 @@ Resources:
           APP_URL: ""
           PAPAGO_CLIENT_ID: ""
           PAPAGO_CLIENT_SECRET: ""
+          PAPAGO_SITE_CLIENT_SECRET: ""
           NTBA_FIX_319: 1
       Events:
         Api:

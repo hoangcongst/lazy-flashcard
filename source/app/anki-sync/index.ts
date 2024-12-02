@@ -3,7 +3,7 @@ import { generateAnki } from "./generateAnki"
 import { targets } from "./target-config"
 
 const index = async () => {
-    for (let [deckName, target] of Object.entries(targets)) {
+    for (const [deckName, target] of Object.entries(targets)) {
         const data = await getData(target)
         generateAnki(deckName, data)
         if (data && data.length > 0)
