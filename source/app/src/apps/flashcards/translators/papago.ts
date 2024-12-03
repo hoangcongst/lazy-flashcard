@@ -5,14 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { TranslateResult } from './translate-result';
 
 export const translate = async (wordInput: string, targetLang: string): Promise<TranslateResult> => {
-    const langCode = await detectLang(wordInput)
     const uuid = uuidv4()
     const timestamp = new Date().getTime().toString()
     const header = {
         'authority': 'papago.naver.com',
         'accept': 'application/json',
         'accept-language': 'en',
-        'Authorization': `${getAuthorization(uuid, timestamp)}`,
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'device-type': 'pc',
         'origin': 'https://papago.naver.com',
@@ -26,7 +24,12 @@ export const translate = async (wordInput: string, targetLang: string): Promise<
         'timestamp': timestamp,
         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
         'x-apigw-partnerid': 'papago'
-    }
+    } as any
+
+    header['authorization'] = getAuthorization(uuid, "https://papago.naver.com/apis/langs/dect", timestamp)
+    const langCode = await detectLang(header, wordInput)
+
+    header['authorization'] = getAuthorization(uuid, "https://papago.naver.com/apis/n2mt/translate", timestamp)
     const translateResponse = await fetch("https://papago.naver.com/apis/n2mt/translate", {
         method: "POST",
         headers: header,
@@ -71,20 +74,16 @@ export const formatMeaningPart = (input: any): Array<string> => {
     return dicts
 }
 
-const detectLang = async (wordInput: string): Promise<string> => {
-    const detectLangResponse = await fetch("https://openapi.naver.com/v1/papago/detectLangs", {
+const detectLang = async (header: any, wordInput: string): Promise<string> => {
+    const detectLangResponse = await fetch("https://papago.naver.com/apis/langs/dect", {
         method: "POST",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'X-Naver-Client-Id': process.env['PAPAGO_CLIENT_ID'] ?? '',
-            'X-Naver-Client-Secret': process.env['PAPAGO_CLIENT_SECRET'] ?? '',
-        },
+        headers: header,
         body: "query=" + wordInput
     })
     const detectLangResult = await detectLangResponse.json() as any
     return detectLangResult.langCode
 }
 
-const getAuthorization = (uuid: string, timestamp: string) => {
-    return "PPG " + uuid + ":" + Base64.stringify(HmacMD5(uuid + "\n" + "https://papago.naver.com/apis/n2mt/translate" + "\n" + timestamp, process.env['PAPAGO_SITE_CLIENT_SECRET'] ?? ''))
+const getAuthorization = (uuid: string, url: string, timestamp: string) => {
+    return "PPG " + uuid + ":" + Base64.stringify(HmacMD5(uuid + "\n" + url + "\n" + timestamp, process.env['PAPAGO_SITE_CLIENT_SECRET'] ?? ''))
 }

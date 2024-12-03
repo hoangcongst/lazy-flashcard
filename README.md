@@ -1,6 +1,14 @@
 ```cd source/app && npm run compile```\
 ```cd source && sam local start-api --env-vars env.json```
 
+To build and deploy your application for the first time, run the following in your shell:
+
+```bash
+cd source && rm -rf .aws-sam/
+sam build
+sam deploy --guided
+```
+
 - https://betterprogramming.pub/aws-sam-setting-local-serverless-development-with-lambda-and-dynamodb-5b4c7375f813
 
 **DynamoDB**

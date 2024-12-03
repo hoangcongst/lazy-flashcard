@@ -36,8 +36,6 @@ Resources:
           TB_FLASHCARD: !Ref FlashCard
           TELEGRAM_BOT_TOKEN: ""
           APP_URL: ""
-          PAPAGO_CLIENT_ID: ""
-          PAPAGO_CLIENT_SECRET: ""
           PAPAGO_SITE_CLIENT_SECRET: ""
           NTBA_FIX_319: 1
       Events:
@@ -47,31 +45,31 @@ Resources:
             Path: /
             Method: POST
 
-  notifyFunction:
-    Type: AWS::Serverless::Function
-    Metadata:
-      BuildMethod: makefile
-    Properties:
-      CodeUri: app/
-      Handler: dist/handlers/notify.handler
-      Runtime: nodejs12.x
-      Architectures:
-        - x86_64
-      MemorySize: 128
-      Timeout: 100
-      Description: Lazy-flashcard notify function
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref Users        
-        - DynamoDBCrudPolicy:
-            TableName: !Ref FlashCard
-      Environment:
-        Variables:
-          TB_USER: !Ref Users
-          TB_FLASHCARD: !Ref FlashCard
-          TELEGRAM_BOT_TOKEN: ""
-          APP_URL: ""
-          NTBA_FIX_319: 1
+  # notifyFunction:
+  #   Type: AWS::Serverless::Function
+  #   Metadata:
+  #     BuildMethod: makefile
+  #   Properties:
+  #     CodeUri: app/
+  #     Handler: dist/handlers/notify.handler
+  #     Runtime: nodejs18.x
+  #     Architectures:
+  #       - x86_64
+  #     MemorySize: 128
+  #     Timeout: 100
+  #     Description: Lazy-flashcard notify function
+  #     Policies:
+  #       - DynamoDBCrudPolicy:
+  #           TableName: !Ref Users        
+  #       - DynamoDBCrudPolicy:
+  #           TableName: !Ref FlashCard
+  #     Environment:
+  #       Variables:
+  #         TB_USER: !Ref Users
+  #         TB_FLASHCARD: !Ref FlashCard
+  #         TELEGRAM_BOT_TOKEN: ""
+  #         APP_URL: ""
+  #         NTBA_FIX_319: 1
   TranslateResult:
     Type: AWS::Serverless::SimpleTable
     Properties:

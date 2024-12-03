@@ -10,6 +10,7 @@ import { handler as handlerAddFlashCard } from './flashcards/add-command';
 import { handler as handlerStart } from './flashcards/start-command';
 import { handler as handlerInverse } from './flashcards/inverse-command';
 import { handler as handlerNotify } from './flashcards/notify-command';
+import { translate } from './flashcards/translators/papago';
 
 export class FlashCardApp implements LambdaApp {
     table: string;
@@ -34,7 +35,6 @@ export class FlashCardApp implements LambdaApp {
 
     async run(event: ApiGatewayEvent): Promise<ApiGatewayResponse> {
         try {
-            console.log(event.body)
             const reqBody = JSON.parse(event.body)
             const msg = reqBody.message || reqBody.callback_query
             
@@ -48,7 +48,6 @@ export class FlashCardApp implements LambdaApp {
             if(msg.group_chat_created) command = '/start'
             else if (command.charAt(0) !== '/') command = '/translate'
 
-            console.log(command)
             await this.handler[command](this.bot, userId, chatId, msg, isCallbackQuery)
         } catch (error) {
             console.log(error)
